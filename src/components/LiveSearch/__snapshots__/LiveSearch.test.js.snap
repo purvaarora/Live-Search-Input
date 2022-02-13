@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LiveSearch component tests matches snapshot 1`] = `
+<div
+  className="liveSearch"
+>
+  <input
+    className="liveSearch-input"
+    id="liveSearchInput"
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    onMouseDown={[Function]}
+    placeholder="Choose Manager"
+    type="text"
+    value=""
+  />
+</div>
+`;

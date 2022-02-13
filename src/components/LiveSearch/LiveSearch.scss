@@ -1,0 +1,60 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+.liveSearch {
+    text-align: left;
+    width: 400px;
+    margin: 20px 50px;
+    &-input {
+        padding: 20px;
+        width: 100%;
+    }
+    &-list {
+        height: 140px;
+        overflow-y: scroll;
+        padding: 0;
+        margin: 0;
+        &-item {
+            border: 1px solid;
+            padding: 10px 20px;
+            display: flex;
+            height: 70px;
+            &-acronym {
+                padding: 10px;
+                background-color: #ffa31a;
+                margin: 0;
+                color: #fff;
+                font-weight: bold;
+                line-height: 26px;
+            }
+            &-content {
+                text-align: left;
+                margin-left: 20px;
+                p {
+                    margin: 5px 0;
+                }
+                &-name {
+                    font-weight: bold;
+                }
+                &-email {
+                    font-size: 12px;
+                    color: #8c8c8c;
+                }
+            }
+        }
+    }
+}
+.highlight {
+    background-color: #e6ffff;
+    .liveSearch-list-item-acronym {
+        background-color: #66b3ff;
+    }
+    .liveSearch-list-item-content-name {
+        color: #5cd65c;
+    }
+}
