@@ -24,3 +24,4 @@ npm run start
 ```sh
 npm run test
 ```
+## [Demo](https://purvaarora.github.io/live-search-input/)
