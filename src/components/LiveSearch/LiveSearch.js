@@ -40,66 +40,6 @@ class LiveSearch extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        var listItems = document.querySelectorAll(".liveSearch-list li");
-
-        if (!isEmpty(listItems)) {
-            var currentLI = 0;
-
-            // remove highlighted class from all list items
-            for (var i = 0; i < listItems.length; i++) {
-                listItems[i].classList.remove("highlight");
-            }
-
-            // Initialize first li as the selected (focused) one:
-            listItems[currentLI].classList.add("highlight");
-
-            // Set up a key event handler for the document
-            document.addEventListener("keydown", function (event) {
-                // Check for up/down key presses
-
-                switch (event.keyCode) {
-                    case 38: // Up arrow    
-                        // Remove the highlighting from the previous element
-                        listItems[currentLI].classList.remove("highlight");
-
-                        currentLI = currentLI > 0 ? --currentLI : 0;     // Decrease the counter      
-                        listItems[currentLI].classList.add("highlight"); // Highlight the new element
-                        break;
-                    case 40: // Down arrow
-                        // Remove the highlighting from the previous element
-                        listItems[currentLI].classList.remove("highlight");
-
-                        currentLI = currentLI < listItems.length - 1 ? ++currentLI : listItems.length - 1; // Increase counter 
-                        listItems[currentLI].classList.add("highlight");       // Highlight the new element
-                        break;
-                    case 13:
-                        this.handleListItemClick(listItems[currentLI].id.split('-')[1])
-
-                }
-
-                let listDiv = document.getElementById('managersList');
-
-                if (listDiv) {
-                    let elHeight = listItems[currentLI].offsetHeight;
-                    let scrollTop = listDiv.scrollTop;
-
-                    let viewport = scrollTop + listDiv.offsetHeight;
-                    var elOffset = elHeight * currentLI;
-
-                    if (elOffset < scrollTop || (elOffset + elHeight) > viewport)
-                        listDiv.scrollTop = elOffset;
-                }
-                listDiv.addEventListener('mouseenter', function (event) {
-                    event.target.classList.add('highlight');
-                }).addEventListener('mouseleave', function (event) {
-                    event.target.removeClass('highlight');
-                });
-
-            })
-        }
-    }
-
     onFocusHandler() {
         // Shows list on input focus
         this.setState({
@@ -133,12 +73,75 @@ class LiveSearch extends React.Component {
         }
     }
 
-    handleListItemClick(id) {
+    handleListItemClick = (id) => {
         // handles enter press on list item and sets input string to state
         this.setState({
             inputString: get(find(this.state.managersList, ['id', id]), 'name', ''),
             showListMenu: false
         })
+    }
+
+    componentDidUpdate() {
+        var listItems = document.querySelectorAll(".liveSearch-list li");
+
+        if (!isEmpty(listItems)) {
+            var currentLI = 0;
+
+            // remove highlighted class from all list items
+            for (var i = 0; i < listItems.length; i++) {
+                listItems[i].classList.remove("highlight");
+            }
+
+            // Initialize first li as the selected (focused) one:
+            listItems[currentLI].classList.add("highlight");
+
+            // Set up a key event handler for the document
+            document.addEventListener("keydown", (event) => {
+                // Check for up/down key presses
+
+                switch (event.keyCode) {
+                    case 38: // Up arrow    
+                        // Remove the highlighting from the previous element
+                        listItems[currentLI].classList.remove("highlight");
+
+                        currentLI = currentLI > 0 ? --currentLI : 0;     // Decrease the counter      
+                        listItems[currentLI].classList.add("highlight"); // Highlight the new element
+                        break;
+                    case 40: // Down arrow
+                        // Remove the highlighting from the previous element
+                        listItems[currentLI].classList.remove("highlight");
+
+                        currentLI = currentLI < listItems.length - 1 ? ++currentLI : listItems.length - 1; // Increase counter 
+                        listItems[currentLI].classList.add("highlight");       // Highlight the new element
+                        break;
+                    case 13:
+                        console.log(this.state);
+                        this.handleListItemClick(listItems[currentLI].id.split('-')[1]);
+
+                }
+
+                let listDiv = document.getElementById('managersList');
+
+                if (listDiv) {
+                    let elHeight = listItems[currentLI].offsetHeight;
+                    let scrollTop = listDiv.scrollTop;
+
+                    let viewport = scrollTop + listDiv.offsetHeight;
+                    var elOffset = elHeight * currentLI;
+
+                    if (elOffset < scrollTop || (elOffset + elHeight) > viewport)
+                        listDiv.scrollTop = elOffset;
+
+                    listDiv.addEventListener('mouseenter', function (event) {
+                        event.target.classList.add('highlight');
+                    })
+                    listDiv.addEventListener('mouseleave', function (event) {
+                        event.target.classList.remove("highlight");
+                    });
+                }
+
+            })
+        }
     }
 
     render() {
